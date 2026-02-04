@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>活動報名表</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <style>
+    body { padding-top: 50px; background-color: transparent; }
+    .container { max-width: 600px; background: #fff; padding: 30px; border-radius: 8px; }
+    .success-msg { display: none; color: #2ecc71; font-weight: bold; text-align: center; margin-top: 20px; }
+    button.button-primary { width: 100%; height: 45px; font-size: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <form id="registrationForm">
+    <div class="row">
+      <label for="identity">身份別</label>
+      <select class="u-full-width" id="identity" required>
+        <option value="">請選擇身份</option>
+        <option value="學生">學生</option>
+        <option value="教職員">教職員</option>
+        <option value="校友">校友</option>
+        <option value="一般大眾">一般大眾</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="unit">單位</label>
+      <input class="u-full-width" type="text" placeholder="例如：某某大學 / 某某公司" id="unit" required>
+    </div>
+
+    <div class="row">
+      <label for="name">姓名</label>
+      <input class="u-full-width" type="text" placeholder="請輸入真實姓名" id="name" required>
+    </div>
+
+    <div class="row">
+      <label for="activity">參與活動類別</label>
+      <select class="u-full-width" id="activity" required>
+        <option value="">請選擇活動</option>
+        <option value="講座">講座</option>
+        <option value="工作坊">工作坊</option>
+        <option value="交流會">交流會</option>
+      </select>
+    </div>
+
+    <button class="button-primary" type="submit">提交報名</button>
+  </form>
+  
+  <div id="successMsg" class="success-msg">🎉 報名成功！感謝您的參與。</div>
+</div>
+
+<script>
+  const form = document.getElementById('registrationForm');
+  const successMsg = document.getElementById('successMsg');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // 對應你的 Google Form entry ID
+    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeW15I0xwkQzmwV4kwzSNSTpiUj_xwJMp9jrWCamlag6mHjMg/formResponse';
+    
+    const formData = new FormData();
+    formData.append('entry.1772185938', document.getElementById('identity').value);
+    formData.append('entry.1343536439', document.getElementById('unit').value);
+    formData.append('entry.397313131', document.getElementById('name').value);
+    formData.append('entry.2059014195', document.getElementById('activity').value);
+
+    // 使用 mode: 'no-cors' 避免跨網域阻擋問題
+    fetch(GOOGLE_FORM_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    }).then(() => {
+      form.style.display = 'none';
+      successMsg.style.display = 'block';
+    }).catch(error => {
+      alert('提交失敗，請檢查網路連線或稍後再試。');
+      console.error('Error!', error.message);
+    });
+  });
+</script>
+
+</body>
+</html>
