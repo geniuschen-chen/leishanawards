@@ -103,6 +103,14 @@
     margin-top: 24px;
     font-size: 1.2rem;
   }
+
+  /* ===== 複選項目提示 ===== */ 
+  .select-hint {
+    margin-top: 6px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
 </style>
 
 
@@ -138,11 +146,13 @@
     <div class="row">
       <label for="activity">參與活動類別</label>
       <select class="u-full-width" id="activity" multiple size="3" required>
-        <option value="">請選擇活動</option>
         <option value="晉升典禮">晉升典禮</option>
         <option value="磊山群英會">磊山群英會</option>
         <option value="群英晚宴(限晚宴資格夥伴)">群英晚宴(限晚宴資格夥伴)</option>
       </select>
+      <div id="activityHint" class="select-hint">
+        ⬇︎ 請選擇一個或多個活動
+      </div>
     </div>
 
     <button class="button-primary" type="submit">提交報名</button>
