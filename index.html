@@ -132,7 +132,7 @@
 
     <div class="row">
       <label for="name">姓名</label>
-      <input class="u-full-width" type="text" placeholder="請輸入真實姓名" id="name" required>
+      <input class="u-full-width" type="text" placeholder="請輸入真實姓名" id="name" maxlength="50" required>
     </div>
 
     <div class="row">
@@ -157,6 +157,9 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    // 移除姓名中的所有空白（含前後與中間）
+    const nameInput = document.getElementById('name');
+    nameInput.value = nameInput.value.replace(/\s+/g, '');
 
     // 對應你的 Google Form entry ID
     const GOOGLE_FORM_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeW15I0xwkQzmwV4kwzSNSTpiUj_xwJMp9jrWCamlag6mHjMg/formResponse';
