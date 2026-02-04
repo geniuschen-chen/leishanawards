@@ -61,10 +61,10 @@
     const GOOGLE_FORM_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeW15I0xwkQzmwV4kwzSNSTpiUj_xwJMp9jrWCamlag6mHjMg/formResponse';
     
     const formData = new FormData();
-    formData.append('entry.1772185938_sentinel', document.getElementById('identity').value);
-    formData.append('entry.1343536439_sentinel', document.getElementById('unit').value);
+    formData.append('entry.1772185938', document.getElementById('identity').value);
+    formData.append('entry.1343536439', document.getElementById('unit').value);
     formData.append('entry.397313131', document.getElementById('name').value);
-    formData.append('entry.2059014195_sentinel', document.getElementById('activity').value);
+    formData.append('entry.2059014195', document.getElementById('activity').value);
 
     // 使用 mode: 'no-cors' 避免跨網域阻擋問題
     fetch(GOOGLE_FORM_URL, {
