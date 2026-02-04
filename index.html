@@ -145,14 +145,14 @@
 
     <div class="row">
       <label for="activity">參與活動類別</label>
+      <div id="activityHint" class="select-hint">
+        ⬇︎ 請選擇一個或多個活動
+      </div>
       <select class="u-full-width" id="activity" multiple size="3" required>
         <option value="晉升典禮">晉升典禮</option>
         <option value="磊山群英會">磊山群英會</option>
         <option value="群英晚宴(限晚宴資格夥伴)">群英晚宴(限晚宴資格夥伴)</option>
       </select>
-      <div id="activityHint" class="select-hint">
-        ⬇︎ 請選擇一個或多個活動
-      </div>
     </div>
 
     <button class="button-primary" type="submit">提交報名</button>
@@ -199,6 +199,15 @@
       console.error('Error!', error.message);
     });
   });
+  
+  const activitySelect = document.getElementById('activity');
+  const activityHint = document.getElementById('activityHint');
+  
+  activitySelect.addEventListener('change', () => {
+    activityHint.style.display =
+    activitySelect.selectedOptions.length > 0 ? 'none' : 'block';
+  });
+  
 </script>
 
 </body>
