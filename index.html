@@ -137,7 +137,7 @@
 
     <div class="row">
       <label for="activity">參與活動類別</label>
-      <select class="u-full-width" id="activity" required>
+      <select class="u-full-width" id="activity" multiple size="3" required>
         <option value="">請選擇活動</option>
         <option value="晉升典禮">晉升典禮</option>
         <option value="磊山群英會">磊山群英會</option>
@@ -168,7 +168,13 @@
     formData.append('entry.1772185938', document.getElementById('identity').value);
     formData.append('entry.1343536439', document.getElementById('unit').value);
     formData.append('entry.397313131', document.getElementById('name').value);
-    formData.append('entry.2059014195', document.getElementById('activity').value);
+    const activitySelect = document.getElementById('activity');
+    const selectedActivities = Array.from(activitySelect.selectedOptions);
+    const activityValue = selectedActivities
+      .map(option => option.value)
+      .join('、'); // 分隔符你可自行改
+
+    formData.append('entry.2059014195', activityValue);
 
     // 使用 mode: 'no-cors' 避免跨網域阻擋問題
     fetch(GOOGLE_FORM_URL, {
