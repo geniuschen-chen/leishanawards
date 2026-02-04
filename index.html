@@ -155,28 +155,58 @@
   const form = document.getElementById('registrationForm');
   const successMsg = document.getElementById('successMsg');
 
+  const nameInput = document.getElementById('name');
+  const activitySelect = document.getElementById('activity');
+  const activityHint = document.getElementById('activityHint');
+
+  // 初始：沒選就顯示提示
+  activityHint.style.display =
+    activitySelect.selectedOptions.length > 0 ? 'none' : 'block';
+
+  // 提示：有選就隱藏
+  activitySelect.addEventListener('change', () => {
+    activityHint.style.display =
+      activitySelect.selectedOptions.length > 0 ? 'none' : 'block';
+  });
+
+  // 桌面 Chrome：不用按 Ctrl 也能點一下切換
+  activitySelect.addEventListener('mousedown', (e) => {
+    if (e.target.tagName && e.target.tagName.toLowerCase() === 'option') {
+      e.preventDefault();
+    }
+  });
+
+  activitySelect.addEventListener('click', (e) => {
+    if (e.target.tagName && e.target.tagName.toLowerCase() === 'option') {
+      e.preventDefault();
+      const option = e.target;
+
+      setTimeout(() => {
+        option.selected = !option.selected;
+        activitySelect.dispatchEvent(new Event('change'));
+      }, 0);
+    }
+  });
+
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+
     // 移除姓名中的所有空白（含前後與中間）
-    const nameInput = document.getElementById('name');
     nameInput.value = nameInput.value.replace(/\s+/g, '');
 
-    // 對應你的 Google Form entry ID
-    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeW15I0xwkQzmwV4kwzSNSTpiUj_xwJMp9jrWCamlag6mHjMg/formResponse';
-    
+    const GOOGLE_FORM_URL =
+      'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeW15I0xwkQzmwV4kwzSNSTpiUj_xwJMp9jrWCamlag6mHjMg/formResponse';
+
     const formData = new FormData();
     formData.append('entry.1772185938', document.getElementById('identity').value);
     formData.append('entry.1343536439', document.getElementById('unit').value);
-    formData.append('entry.397313131', document.getElementById('name').value);
-    const activitySelect = document.getElementById('activity');
-    const selectedActivities = Array.from(activitySelect.selectedOptions);
-    const activityValue = selectedActivities
-      .map(option => option.value)
-      .join('、'); // 分隔符你可自行改
+    formData.append('entry.397313131', nameInput.value);
 
+    // 多選活動：合併成字串（簡答題）
+    const selectedActivities = Array.from(activitySelect.selectedOptions);
+    const activityValue = selectedActivities.map(o => o.value).join('、');
     formData.append('entry.2059014195', activityValue);
 
-    // 使用 mode: 'no-cors' 避免跨網域阻擋問題
     fetch(GOOGLE_FORM_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -189,25 +219,6 @@
       console.error('Error!', error.message);
     });
   });
-  
-  const activitySelect = document.getElementById('activity');
-  const activityHint = document.getElementById('activityHint');
-  
-  activitySelect.addEventListener('change', () => {
-    activityHint.style.display =
-    activitySelect.selectedOptions.length > 0 ? 'none' : 'block';
-  });
-
-  const activitySelect = document.getElementById('activity');
-  
-  activitySelect.addEventListener('mousedown', (e) => {
-    if (e.target.tagName.toLowerCase() === 'option') {
-      e.preventDefault(); // 阻止瀏覽器預設單選行為
-      e.target.selected = !e.target.selected; // 點一下切換選取
-      activitySelect.dispatchEvent(new Event('change')); // 讓你的提示更新
-    }
-  });
-  
 </script>
 
 </body>
