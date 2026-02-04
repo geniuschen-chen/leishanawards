@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
   <style>
     body { padding-top: 50px; background-color: transparent; }
-    .container { max-width: 600px; background: transparent; padding: 30px; border-radius: 8px; }
+    .container { max-width: 600px; background: #ffffff80; padding: 30px; border-radius: 8px; }
     .success-msg { display: none; color: #2ecc71; font-weight: bold; text-align: center; margin-top: 20px; }
     button.button-primary { width: 100%; height: 45px; font-size: 1.5rem; }
   </style>
@@ -57,32 +57,29 @@
   form.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // 1. 抓取網頁上的元件
-const form = document.querySelector('form'); // 或是用 getElementById
-const successMsg = document.querySelector('.success-msg');
-
-form.addEventListener('submit', function(e) {
-    e.preventDefault(); // 阻止頁面跳轉
-
+    // 對應你的 Google Form entry ID
     const GOOGLE_FORM_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeW15I0xwkQzmwV4kwzSNSTpiUj_xwJMp9jrWCamlag6mHjMg/formResponse';
     
     const formData = new FormData();
-    // 這裡要確定 id="identity" 等元件真的存在
     formData.append('entry.1772185938', document.getElementById('identity').value);
     formData.append('entry.1343536439', document.getElementById('unit').value);
     formData.append('entry.397313131', document.getElementById('name').value);
     formData.append('entry.2059014195', document.getElementById('activity').value);
 
+    // 使用 mode: 'no-cors' 避免跨網域阻擋問題
     fetch(GOOGLE_FORM_URL, {
       method: 'POST',
       mode: 'no-cors',
       body: formData
     }).then(() => {
-      // 成功後隱藏表單，顯示成功訊息
       form.style.display = 'none';
       successMsg.style.display = 'block';
     }).catch(error => {
-      alert('提交失敗');
+      alert('提交失敗，請檢查網路連線或稍後再試。');
       console.error('Error!', error.message);
     });
-});
+  });
+</script>
+
+</body>
+</html>
