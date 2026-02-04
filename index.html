@@ -83,6 +83,27 @@
     margin-top: 24px;
     font-size: 1.2rem;
   }
+
+  /* 強制覆蓋 Skeleton 對文字輸入框的樣式 */
+  input.u-full-width[type="text"] {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    color: #ffffff !important;
+    border-radius: 8px;
+  }
+
+  /* placeholder 顏色 */
+  input.u-full-width[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  /* focus 狀態 */
+  input.u-full-width[type="text"]:focus {
+    border-color: #ff8acb !important;
+    box-shadow: 0 0 0 2px rgba(255, 138, 203, 0.3);
+    outline: none;
+  }
+
 </style>
 
 </head>
