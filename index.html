@@ -157,17 +157,6 @@
 
   const nameInput = document.getElementById('name');
   const activitySelect = document.getElementById('activity');
-  const activityHint = document.getElementById('activityHint');
-
-  // 初始：沒選就顯示提示
-  activityHint.style.display =
-    activitySelect.selectedOptions.length > 0 ? 'none' : 'block';
-
-  // 提示：有選就隱藏
-  activitySelect.addEventListener('change', () => {
-    activityHint.style.display =
-      activitySelect.selectedOptions.length > 0 ? 'none' : 'block';
-  });
 
   // 桌面 Chrome：不用按 Ctrl 也能點一下切換
   activitySelect.addEventListener('mousedown', (e) => {
