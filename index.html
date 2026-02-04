@@ -197,6 +197,16 @@
     activityHint.style.display =
     activitySelect.selectedOptions.length > 0 ? 'none' : 'block';
   });
+
+  const activitySelect = document.getElementById('activity');
+  
+  activitySelect.addEventListener('mousedown', (e) => {
+    if (e.target.tagName.toLowerCase() === 'option') {
+      e.preventDefault(); // 阻止瀏覽器預設單選行為
+      e.target.selected = !e.target.selected; // 點一下切換選取
+      activitySelect.dispatchEvent(new Event('change')); // 讓你的提示更新
+    }
+  });
   
 </script>
 
